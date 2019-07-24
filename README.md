@@ -1,4 +1,10 @@
-## Reach Router
+# Reach Router
+
+## Abandoned
+
+REACH ROUTER IS NOT TYPESCRIPT FRIENDLY - THEREFORE I DON'T CONTINUE WITH IT
+
+---
 
 [Doc](https://reach.tech/router)  
 [GitHub](https://github.com/reach/router)
