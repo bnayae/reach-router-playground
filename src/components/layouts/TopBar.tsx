@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { AppBar, makeStyles, Theme, createStyles, Toolbar, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-// import SideBarContext, { ISideBarContext } from '../Contexts/SideBarContext';
-// import { useContext } from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,6 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
         hide: {
             display: 'none',
         },
+        behindBar: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: '0 8px',
+            ...theme.mixins.toolbar,
+        }
     }),
 );
 
@@ -31,25 +36,28 @@ export function TopBar() {
     const classes = useStyles();
 
     return (
-        <AppBar
-            position="fixed"
-            className={classes.appBar}
-        >
-            <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="Open drawer"
-                    // onClick={e => setOpen(!open)}
-                    edge="start"
-                    //className={clsx(classes.menuButton, { [classes.hide]: open, })}
-                    className={classes.menuButton}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                    Company Logo
+        <>
+            <AppBar
+                position="fixed"
+                className={classes.appBar}
+            >
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="Open drawer"
+                        // onClick={e => setOpen(!open)}
+                        edge="start"
+                        //className={clsx(classes.menuButton, { [classes.hide]: open, })}
+                        className={classes.menuButton}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap>
+                        Company Logo
                 </Typography>
-            </Toolbar>
-        </AppBar>
+                </Toolbar>
+            </AppBar>
+            <div className={classes.behindBar}></div>
+        </>
     );
 }

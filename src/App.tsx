@@ -5,31 +5,19 @@
 import React from 'react';
 import './App.css';
 import Layout from './components/layouts/Layout'
+import { Router } from "react-router";
+import { createBrowserHistory } from "history";
+
+const history = createBrowserHistory()
+
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Layout />
-      {/* <Sidebar>
-        <Router primary={false}>
-          <HomeNav path="/" />
-          <DashboardNav path="dashboard" />
-        </Router>
-      </Sidebar>
-
-      <MainScreen>
-        <Router>
-          <Home path="/">
-            <About path="about" />
-            <Support path="support" />
-          </Home>
-          <Dash path="dashboard">
-            <Invoices path="invoices" />
-            <Team path="team" />
-          </Dash>
-        </Router>
-      </MainScreen> */}
-    </div>
+    <Router history={history}>
+      <div className="App">
+        <Layout />
+      </div>
+    </Router>
   );
 }
 

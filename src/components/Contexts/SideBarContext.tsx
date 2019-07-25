@@ -4,12 +4,18 @@
 // https://daveceddia.com/usecontext-hook/
 
 import React from "react";
+import ILinkToProps from '../routing/ILinkToProps';
 
 export interface ISideBarContext {
     open: boolean;
     setOpen: (open: boolean) => void;
+    options: (ILinkToProps | undefined)[];
+    setOptions: (options: (ILinkToProps | undefined)[]) => void;
 }
 
-const SideBarContext = React.createContext<ISideBarContext>({ open: false, setOpen: o => {} });
+const SideBarContext = React.createContext<ISideBarContext>({
+    open: false, setOpen: o => { },
+    options: [], setOptions: o => { }
+});
 
 export default SideBarContext;
