@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -6,9 +6,10 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import SideBarContext, { ISideBarContext } from '../contexts/SideBarContext';
-import { List } from '@material-ui/core';
+import { List, TextField } from '@material-ui/core';
 import LinkTo from '../routing/LinkTo'
+import { useObservable } from './../contexts/useObservable';
+import ILinkToProps from '../routing/ILinkToProps';
 
 const drawerWidth = 240;
 
@@ -54,7 +55,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SideBar() {
     const classes = useStyles();
     const theme = useTheme();
-    const { open, setOpen, options }: ISideBarContext = useContext(SideBarContext)
+    const options: ILinkToProps[] = useObservable();
+    const [open, setOpen] = useState<boolean>(false);
 
     const iconFn: any = () => {
         if (theme.direction === 'rtl') {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import SideBarContext from '../contexts/SideBarContext';
 import SideBar from './SideBar'
 import { TopBar } from './TopBar';
@@ -8,7 +7,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Home from '../pages/Home'
 import Users from '../pages/Users'
 import NoMatch from '../pages/NoMatch'
-import ILinkToProps from '../routing/ILinkToProps'
 
 export interface ILayoutProps {
 }
@@ -22,12 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Layout(props: ILayoutProps) {
-    const [open, setOpen] = useState<boolean>(false);
-    const [options, setOptions] = useState<(ILinkToProps | undefined)[]>([]);
     const classes = useStyles();
 
     return (
-        <SideBarContext.Provider value={{ open, setOpen, options, setOptions }}>
+        <SideBarContext>
             <div className={classes.root}>
                 <CssBaseline />
                 <Grid container={true} direction="row" justify="flex-start" alignItems="stretch">
@@ -50,6 +46,6 @@ export default function Layout(props: ILayoutProps) {
                     </Grid>
                 </Grid>
             </div>
-        </SideBarContext.Provider>
+        </SideBarContext>
     );
 }
