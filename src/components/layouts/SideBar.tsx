@@ -3,13 +3,13 @@ import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { List, TextField } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import LinkTo from '../routing/LinkTo'
 import { useObservable } from './../contexts/useObservable';
 import ILinkToProps from '../routing/ILinkToProps';
+import IconButton from '@material-ui/core/IconButton';
 
 const drawerWidth = 240;
 

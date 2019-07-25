@@ -6,6 +6,7 @@ import { Grid, CssBaseline, makeStyles, Theme, createStyles } from '@material-ui
 import { Redirect, Route, Switch } from "react-router-dom";
 import Home from '../pages/Home'
 import Users from '../pages/Users'
+import About from '../pages/About'
 import NoMatch from '../pages/NoMatch'
 
 export interface ILayoutProps {
@@ -38,7 +39,10 @@ export default function Layout(props: ILayoutProps) {
                             <Route exact path="/" component={Home} />
 
                             <Route path="/users" component={Users} />
+                            <Route path="/users/:id" component={Users} />
                             <Redirect from="/accounts" to="/users" />
+
+                            <Route path="/about" component={About} />
 
                             <Route component={NoMatch} />
                         </Switch>
