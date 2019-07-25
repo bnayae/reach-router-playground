@@ -1,7 +1,7 @@
 // credit: https://github.com/CharlesStover/use-react-router
 
 import { LocationState } from 'history';
-import { Context, useContext, useEffect } from 'react';
+import { Context, useContext } from 'react';
 import { __RouterContext, RouteComponentProps, StaticContext } from 'react-router';
 
 

@@ -9,10 +9,10 @@ import ILinkToProps from '../routing/ILinkToProps';
 
 export default function useUpdater(): { value: ILinkToProps[], setValue: (value: ILinkToProps[]) => void } {
     const context: BehaviorSubject<ILinkToProps[]> = useContext<BehaviorSubject<ILinkToProps[]>>(Context)
-    const [state, setstate] = useState<ILinkToProps[]>(context.value);
+    const [state, setState] = useState<ILinkToProps[]>(context.value);
 
     useEffect(() => {
-        const subscription: Subscription = context.subscribe(v => setstate(v));
+        const subscription: Subscription = context.subscribe(v => setState(v));
         return () => subscription.unsubscribe();
     }, [context]);
 

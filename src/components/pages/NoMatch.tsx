@@ -22,6 +22,7 @@ export default function NoMatch(props: INoMatchProps) {
         setValue(navigation);
 
         return () => setValue([]);
+        // eslint-disable-next-line
     }, []);
 
     return (

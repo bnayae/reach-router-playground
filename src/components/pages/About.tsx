@@ -22,6 +22,7 @@ export default function About(props: IAboutProps) {
         setValue(navigation);
 
         return () => setValue([]);
+        // eslint-disable-next-line
     }, []);
 
     return (
