@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import useSideBarObservableUpdater from '../contexts/useSideBarObservableUpdater';
+import { useState } from 'react';
 import ILinkToProps from '../routing/ILinkToProps';
 import useRouter from '../routing/useRouter'
 import { Link } from 'react-router-dom';
+import useSideBar from '../contexts/useSideBar';
 
 import UserIcon from '@material-ui/icons/Group';
 import AboutIcon from '@material-ui/icons/Announcement';
@@ -13,21 +13,14 @@ export interface IHomeProps {
 }
 
 export default function Home(props: IHomeProps) {
-    var { setValue } = useSideBarObservableUpdater();
+    const navigation: ILinkToProps[] = [
+        { to: "/users", text: "Users", icon: <UserIcon /> },
+        { to: "/about", text: "About", icon: <AboutIcon /> },
+    ];
+    useSideBar(navigation);
     const [search, setSearch] = useState("");
 
     const { location } = useRouter();
-
-    useEffect(() => {
-        const navigation: ILinkToProps[] = [
-            { to: "/users", text: "Users", icon: <UserIcon /> },
-            { to: "/about", text: "About", icon: <AboutIcon /> },
-        ];
-        setValue(navigation);
-
-        return () => setValue([]);
-        // eslint-disable-next-line
-    }, []);
 
     return (
         <>

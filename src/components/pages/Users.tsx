@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import ILinkToProps from '../routing/ILinkToProps';
-import useSideBarObservableUpdater from '../contexts/useSideBarObservableUpdater';
+import useSideBar from '../contexts/useSideBar';
 
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
@@ -12,19 +11,12 @@ export interface IUsersProps {
 }
 
 export default function Users(props: IUsersProps) {
-    var { setValue } = useSideBarObservableUpdater();
+    const navigation: ILinkToProps[] = [
+        { to: "/", text: "Home", icon: <HomeIcon /> },
+        { to: "/about", text: "About", icon: <AboutIcon /> },
+    ];
+    useSideBar(navigation);
     const { location } = useRouter();
-
-    useEffect(() => {
-        const navigation: ILinkToProps[] = [
-            { to: "/", text: "Home", icon: <HomeIcon /> },
-            { to: "/about", text: "About", icon: <AboutIcon /> },
-        ];
-        setValue(navigation);
-
-        return () => setValue([]);
-        // eslint-disable-next-line
-    }, []);
 
     return (
         <div>

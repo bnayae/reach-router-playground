@@ -14,6 +14,7 @@ const Search = lazy(() => import('../pages/Search'));
 const About = lazy(() => import('../pages/About'));
 const WithProps = lazy(() => import('../pages/WithProps/WithProps'));
 const NoMatch = lazy(() => import('../pages/NoMatch'));
+const Wizard = lazy(() => import('../pages/dynamic-wizard/DynamicWizardHome'));
 
 export interface ILayoutProps {
 }
@@ -49,10 +50,11 @@ export default function Layout(props: ILayoutProps) {
                                 <Route exact path="/users" component={Users} />
                                 <Redirect from="/accounts/:id" to="/users/:id" />
                                 <Redirect exact from="/accounts" to="/users" />
+                                <Route path="/about" component={About} />
+
+                                <Route path="/wizard" component={Wizard} />
 
                                 <Route exact path="/search" component={Search} />
-
-                                <Route path="/about" component={About} />
 
                                 <Route exact path="/props" render={
                                     (props) => <WithProps {...props} title="static title" count={10} />

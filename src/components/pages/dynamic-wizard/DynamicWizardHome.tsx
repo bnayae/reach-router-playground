@@ -6,8 +6,8 @@ export interface IDynamicWizardHomeProps {
 
 export default function DynamicWizardHome(props: IDynamicWizardHomeProps) {
     return (
-        <div>
-
-        </div>
+        <>
+            <h3>Wizard</h3>
+        </>
     );
 }
