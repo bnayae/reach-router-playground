@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { Suspense, lazy } from 'react';
 
-import SideBarContext from '../contexts/SideBarContext';
+import SideBarContext from '../contexts/SideBarObservableContext';
 import SideBar from './SideBar'
 import { TopBar } from './TopBar';
 import { Grid, CssBaseline, makeStyles, Theme, createStyles } from '@material-ui/core';
 import { Redirect, Route, Switch } from "react-router-dom";
+// import User from '../pages/User';
 // import Home from '../pages/Home'
 // import Users from '../pages/Users'
 // import About from '../pages/About'
 // import NoMatch from '../pages/NoMatch'
 const Home = lazy(() => import('../pages/Home'));
+const User = lazy(() => import('../pages/User'));
 const Users = lazy(() => import('../pages/Users'));
 const About = lazy(() => import('../pages/About'));
 const NoMatch = lazy(() => import('../pages/NoMatch'));
@@ -45,9 +47,10 @@ export default function Layout(props: ILayoutProps) {
                             <Switch>
                                 <Route exact path="/" component={Home} />
 
-                                <Route path="/users" component={Users} />
-                                <Route path="/users/:id" component={Users} />
-                                <Redirect from="/accounts" to="/users" />
+                                <Route path="/users/:id" component={User} />
+                                <Route exact path="/users" component={Users} />
+                                <Redirect from="/accounts/:id" to="/users/:id" />
+                                <Redirect exact from="/accounts" to="/users" />
 
                                 <Route path="/about" component={About} />
 

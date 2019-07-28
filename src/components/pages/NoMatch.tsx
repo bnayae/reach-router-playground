@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import useUpdater from './../contexts/useUpdater';
+import useSideBarObservableUpdater from '../contexts/useSideBarObservableUpdater';
 import ILinkToProps from '../routing/ILinkToProps';
 
 import UserIcon from '@material-ui/icons/Group';
@@ -11,7 +11,7 @@ export interface INoMatchProps {
 }
 
 export default function NoMatch(props: INoMatchProps) {
-    var { setValue } = useUpdater();
+    var { setValue } = useSideBarObservableUpdater();
 
     React.useEffect(() => {
         const navigation: ILinkToProps[] = [

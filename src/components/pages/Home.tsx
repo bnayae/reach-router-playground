@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import useUpdater from './../contexts/useUpdater';
+import useSideBarObservableUpdater from '../contexts/useSideBarObservableUpdater';
 import ILinkToProps from '../routing/ILinkToProps';
 import useRouter from '../routing/useRouter'
 import UserIcon from '@material-ui/icons/Group';
@@ -10,7 +10,7 @@ export interface IHomeProps {
 }
 
 export default function Home(props: IHomeProps) {
-    var { setValue } = useUpdater();
+    var { setValue } = useSideBarObservableUpdater();
     const { location } = useRouter();
 
     useEffect(() => {

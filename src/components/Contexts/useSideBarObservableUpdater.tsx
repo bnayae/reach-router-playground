@@ -3,11 +3,11 @@
 import { useContext, useState, useEffect } from 'react'
 
 import { BehaviorSubject } from 'rxjs'
-import { Context } from './SideBarContext'
+import { Context } from './SideBarObservableContext'
 import { Subscription } from 'rxjs';
 import ILinkToProps from '../routing/ILinkToProps';
 
-export default function useUpdater(): { value: ILinkToProps[], setValue: (value: ILinkToProps[]) => void } {
+export default function useSideBarObservableUpdater(): { value: ILinkToProps[], setValue: (value: ILinkToProps[]) => void } {
     const context: BehaviorSubject<ILinkToProps[]> = useContext<BehaviorSubject<ILinkToProps[]>>(Context)
     const [state, setState] = useState<ILinkToProps[]>(context.value);
 

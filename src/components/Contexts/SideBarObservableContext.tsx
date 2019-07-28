@@ -7,17 +7,13 @@
 
 import ObservableContextFactory from './ObservableContextFactory'
 import ILinkToProps from '../routing/ILinkToProps';
-
-
-export interface IObservableContextProps {
-    children: React.ReactNode;
-}
+import IObservableContextProps from './IObservableContextProps'
 
 const factory: ObservableContextFactory<ILinkToProps[]> = new ObservableContextFactory<ILinkToProps[]>([]);
 
 export const Context = factory.Context;
 
-export default function SideBarContext(props: IObservableContextProps) {
+export default function RouteObservableSideBarContext(props: IObservableContextProps) {
     const { children } = props;
 
     return factory.Provider(children);

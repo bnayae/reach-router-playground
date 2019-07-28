@@ -2,22 +2,24 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import ILinkToProps from '../routing/ILinkToProps';
 import useSideBarObservableUpdater from '../contexts/useSideBarObservableUpdater';
+import useRouter from '../routing/useRouter';
 
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
-import useRouter from '../routing/useRouter';
-import { Link } from 'react-router-dom';
+import UserIcon from '@material-ui/icons/Group';
 
-export interface IUsersProps {
+export interface IUserProps {
 }
 
-export default function Users(props: IUsersProps) {
+export default function User(props: IUserProps) {
     var { setValue } = useSideBarObservableUpdater();
-    const { location } = useRouter();
+    const { location, match } = useRouter<{ id: string }, any, any>();
+    const id: any = match.params.id;
 
     useEffect(() => {
         const navigation: ILinkToProps[] = [
             { to: "/", text: "Home", icon: <HomeIcon /> },
+            { to: "/users", text: "Users", icon: <UserIcon /> },
             { to: "/about", text: "About", icon: <AboutIcon /> },
         ];
         setValue(navigation);
@@ -28,14 +30,17 @@ export default function Users(props: IUsersProps) {
 
     return (
         <div>
-            <h4>Users</h4>
+            <h4>User {id}</h4>
             {/* <p>id = {props.id}</p> */}
             <p>current location = {location.pathname}</p>
-            <ul>
-                <Link to="/users/1"><li key="1">User A</li></Link>
-                <Link to="/users/2"><li key="2">User B</li></Link>
-                <Link to="/users/3"><li key="3">User C</li></Link>
-            </ul>
+            <p>
+                <strong>Match Props: </strong>
+                <code>{JSON.stringify(match, null, 2)}</code>
+            </p>
+            <p>
+                <strong>Location Props: </strong>
+                <code>{JSON.stringify(location, null, 2)}</code>
+            </p>
         </div>
     );
 }

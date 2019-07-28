@@ -7,7 +7,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { List } from '@material-ui/core';
 import LinkTo from '../routing/LinkTo'
-import { useObservable } from './../contexts/useObservable';
+import useSideBarObservable from '../contexts/useSideBarObservable';
 import ILinkToProps from '../routing/ILinkToProps';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SideBar() {
     const classes = useStyles();
     const theme = useTheme();
-    const options: ILinkToProps[] = useObservable();
+    const options: ILinkToProps[] = useSideBarObservable();
     const [open, setOpen] = useState<boolean>(false);
 
     const iconFn: any = () => {

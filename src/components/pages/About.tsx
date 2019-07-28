@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import useUpdater from './../contexts/useUpdater';
+import useSideBarObservableUpdater from '../contexts/useSideBarObservableUpdater';
 import ILinkToProps from '../routing/ILinkToProps';
 
 import UserIcon from '@material-ui/icons/Group';
@@ -11,7 +11,7 @@ export interface IAboutProps {
 }
 
 export default function About(props: IAboutProps) {
-    var { setValue } = useUpdater();
+    var { setValue } = useSideBarObservableUpdater();
 
     useEffect(() => {
         const navigation: ILinkToProps[] = [
