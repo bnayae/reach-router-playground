@@ -6,15 +6,13 @@ import SideBar from './SideBar'
 import { TopBar } from './TopBar';
 import { Grid, CssBaseline, makeStyles, Theme, createStyles } from '@material-ui/core';
 import { Redirect, Route, Switch } from "react-router-dom";
-// import User from '../pages/User';
-// import Home from '../pages/Home'
-// import Users from '../pages/Users'
-// import About from '../pages/About'
-// import NoMatch from '../pages/NoMatch'
+
 const Home = lazy(() => import('../pages/Home'));
 const User = lazy(() => import('../pages/User'));
 const Users = lazy(() => import('../pages/Users'));
+const Search = lazy(() => import('../pages/Search'));
 const About = lazy(() => import('../pages/About'));
+const WithProps = lazy(() => import('../pages/WithProps/WithProps'));
 const NoMatch = lazy(() => import('../pages/NoMatch'));
 
 export interface ILayoutProps {
@@ -52,7 +50,13 @@ export default function Layout(props: ILayoutProps) {
                                 <Redirect from="/accounts/:id" to="/users/:id" />
                                 <Redirect exact from="/accounts" to="/users" />
 
+                                <Route exact path="/search" component={Search} />
+
                                 <Route path="/about" component={About} />
+
+                                <Route exact path="/props" render={
+                                    (props) => <WithProps {...props} title="static title" count={10} />
+                                } />
 
                                 <Route component={NoMatch} />
                             </Switch>

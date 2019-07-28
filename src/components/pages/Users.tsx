@@ -29,7 +29,6 @@ export default function Users(props: IUsersProps) {
     return (
         <div>
             <h4>Users</h4>
-            {/* <p>id = {props.id}</p> */}
             <p>current location = {location.pathname}</p>
             <ul>
                 <Link to="/users/1"><li key="1">User A</li></Link>

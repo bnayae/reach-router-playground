@@ -1,6 +1,12 @@
-# Reach Router
+# Router
 
-## Abandoned
+## Doc / Tutorials
+
+[Deep dive into React Router](https://learnwithparam.com/blog/dynamic-pages-in-react-router/)
+
+## Reach Router
+
+### Abandoned
 
 REACH ROUTER IS NOT TYPESCRIPT FRIENDLY - THEREFORE I DON'T CONTINUE WITH IT
 

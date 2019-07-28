@@ -1,22 +1,20 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import ILinkToProps from '../routing/ILinkToProps';
-import useSideBarObservableUpdater from '../contexts/useSideBarObservableUpdater';
-import useRouter from '../routing/useRouter';
 
+import useSideBarObservableUpdater from '../../contexts/useSideBarObservableUpdater';
+import ILinkToProps from '../../routing/ILinkToProps';
+import IWithPropsProps from './IWithPropsProps'
+import useRouter from '../../routing/useRouter';
+
+import UserIcon from '@material-ui/icons/Group';
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
-import UserIcon from '@material-ui/icons/Group';
 
-export interface IUserProps {
-}
 
-export default function User(props: IUserProps) {
+export default function WithProps(props: IWithPropsProps) {
     var { setValue } = useSideBarObservableUpdater();
     const { location, match } = useRouter<{ id: string }, any, any>();
-    const id: any = match.params.id;
 
-    useEffect(() => {
+    React.useEffect(() => {
         const navigation: ILinkToProps[] = [
             { to: "/", text: "Home", icon: <HomeIcon /> },
             { to: "/users", text: "Users", icon: <UserIcon /> },
@@ -30,8 +28,8 @@ export default function User(props: IUserProps) {
 
     return (
         <div>
-            <h4>User {id}</h4>
-            <p>current location = {location.pathname}</p>
+            <h3>With Properties</h3>
+            <h4>{props.title} = {props.count}</h4>
             <p>
                 <strong>Match Props: </strong>
                 <code>{JSON.stringify(match, null, 2)}</code>

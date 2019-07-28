@@ -8,13 +8,12 @@ import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
 import UserIcon from '@material-ui/icons/Group';
 
-export interface IUserProps {
+export interface ISearchProps {
 }
 
-export default function User(props: IUserProps) {
+export default function Search(props: ISearchProps) {
     var { setValue } = useSideBarObservableUpdater();
     const { location, match } = useRouter<{ id: string }, any, any>();
-    const id: any = match.params.id;
 
     useEffect(() => {
         const navigation: ILinkToProps[] = [
@@ -30,8 +29,11 @@ export default function User(props: IUserProps) {
 
     return (
         <div>
-            <h4>User {id}</h4>
+            <h4>Search</h4>
+
             <p>current location = {location.pathname}</p>
+            <p>Query Params is {location.search}</p>
+            <p>Parsed Query Params is {location.search.substr(3)}</p>
             <p>
                 <strong>Match Props: </strong>
                 <code>{JSON.stringify(match, null, 2)}</code>
@@ -40,6 +42,7 @@ export default function User(props: IUserProps) {
                 <strong>Location Props: </strong>
                 <code>{JSON.stringify(location, null, 2)}</code>
             </p>
+
         </div>
     );
 }

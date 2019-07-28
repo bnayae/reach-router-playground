@@ -1,5 +1,8 @@
 // credit: https://github.com/LeetCode-OpenSource/rxjs-hooks/blob/master/src/use-observable.ts
 
+// TODO: get the list and do React.useEffect inside
+
+
 import { useContext, useState, useEffect } from 'react'
 
 import { BehaviorSubject } from 'rxjs'
