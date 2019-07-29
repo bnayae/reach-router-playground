@@ -17,7 +17,7 @@ export interface IMasterProps {
 }
 
 export default function Master(props: IMasterProps) {
-    const { match } = useRouter();
+    const { match, history } = useRouter();
 
     const navigation: ILinkToProps[] = [
         { to: "/", text: "Home", icon: <HomeIcon /> },
@@ -33,14 +33,12 @@ export default function Master(props: IMasterProps) {
             <p>this content belong to the master</p>
             <ul>
                 <li>
-                    <Link to={`${match.url}/a`}>Rendering with React</Link>
+                    <Link to={`${match.url}/a`}>Stage A</Link>
                 </li>
                 <li>
-                    <Link to={`${match.url}/b`}>Components</Link>
+                    <Link to={`${match.url}/b`}>Stage B</Link>
                 </li>
-                <li>
-                    <Link to={`${match.url}/c`}>Props v. State</Link>
-                </li>
+                <button type="button" onClick={e => { history.push(`${match.url}/c`) }}>Stage C</button>
             </ul>
             <Switch>
                 <Route path={`${match.path}/a`} render={
