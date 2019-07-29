@@ -4,9 +4,8 @@ import IStageTemplateProps from './IStageTemplateProps';
 
 
 export function StageTemplate<T>(props: IStageTemplateProps<T>) {
-    const data = props.useData();
     return (
-        <Form onSubmit={props.submit} initialValues={data} subscription={{ submitting: true }}>
+        <Form onSubmit={props.submit} initialValues={props.data} subscription={{ submitting: true }}>
             {(formProps: FormRenderProps<T>) => {
                 const { handleSubmit, submitting } = formProps;
                 const children = props.children;

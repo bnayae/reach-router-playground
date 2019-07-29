@@ -6,7 +6,6 @@ import { FormApi, SubmissionErrors } from 'final-form';
 import RenderCount from '../../utils/RenderCount'
 import ILinkToProps from '../../routing/ILinkToProps';
 import useSideBar from '../../contexts/useSideBar'
-import WizardContext from './context/WizardContext';
 import WizardState from './state/WizardState';
 import IWizardState from './state/IWizardState';
 import useRouter from '../../routing/useRouter';
@@ -160,27 +159,25 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
 
     return (
         <>
-            <WizardContext.Provider value={data}>
-                <h3>Wizard</h3>
-                <Switch>
-                    <Route path={`${match.path}/a`} render={
-                        (routeProps) => <StageA {...routeProps} submit={onSubmitA} lastStage={lastStage} />
-                    } />
-                    <Route path={`${match.path}/b`} render={
-                        (routeProps) => <StageB {...routeProps} submit={onSubmitB} lastStage={lastStage} />
-                    } />
-                    <Route path={`${match.path}/c`} render={
-                        (routeProps) => <StageC {...routeProps} submit={onSubmitC} lastStage={lastStage} />
-                    } />
-                    <Route exact path={`${match.path}`} render={
-                        (routeProps) => <Stage0 {...routeProps} submit={onSubmit0} options={['a', 'b', 'c']} lastStage={false} />
-                    } />
-                    <Redirect to={`${match.path}`} />
-                </Switch>
-                <RenderCount />
-                <p>Location is {location.pathname}</p>
-                {summary}
-            </WizardContext.Provider>
+            <h3>Wizard</h3>
+            <Switch>
+                <Route path={`${match.path}/a`} render={
+                    (routeProps) => <StageA {...routeProps} data={data.stages.stageA} submit={onSubmitA} lastStage={lastStage} />
+                } />
+                <Route path={`${match.path}/b`} render={
+                    (routeProps) => <StageB {...routeProps} data={data.stages.stageB} submit={onSubmitB} lastStage={lastStage} />
+                } />
+                <Route path={`${match.path}/c`} render={
+                    (routeProps) => <StageC {...routeProps} data={data.stages.stageC} submit={onSubmitC} lastStage={lastStage} />
+                } />
+                <Route exact path={`${match.path}`} render={
+                    (routeProps) => <Stage0 {...routeProps} data={{ activeStages: data.activeStages }} submit={onSubmit0} options={['a', 'b', 'c']} lastStage={false} />
+                } />
+                <Redirect to={`${match.path}`} />
+            </Switch>
+            <RenderCount />
+            <p>Location is {location.pathname}</p>
+            {summary}
         </>
     );
 }

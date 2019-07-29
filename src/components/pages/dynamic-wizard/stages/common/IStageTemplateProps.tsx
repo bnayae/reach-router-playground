@@ -6,7 +6,7 @@ export default interface IStageTemplateProps<T> {
         form: FormApi<T>,
         callback?: (errors?: SubmissionErrors) => void)
         => void;
-    useData: () => T;
+    data: T;
     lastStage: boolean;
     children?: React.ReactNode;
 }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { FieldRenderProps, Field } from "react-final-form";
 import { StageTemplate } from './common/StageTemplate';
 import IStageTemplateProps from './common/IStageTemplateProps';
-import useStage0 from '../context/hooks/useStage0';
 import IStageProps from './common/IStageProps';
 
 type DataType = { activeStages: string[] };
@@ -16,7 +15,7 @@ const Stage = (props: IStageTemplateProps<DataType>): JSX.Element => StageTempla
 export default function Stage0(props: Stage0Props) {
     const { options } = props;
     return (
-        <Stage key="stage0" useData={useStage0} submit={props.submit} lastStage={props.lastStage}>
+        <Stage key="stage0" data={props.data} submit={props.submit} lastStage={props.lastStage}>
             <>
                 {options.map((item: string, index: number) =>
                     <div key={item}>

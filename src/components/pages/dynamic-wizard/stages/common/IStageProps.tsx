@@ -7,4 +7,5 @@ export default interface IStageProps<T> {
         callback?: (errors?: SubmissionErrors) => void)
         => void;
     lastStage: boolean;
+    data: T;
 }

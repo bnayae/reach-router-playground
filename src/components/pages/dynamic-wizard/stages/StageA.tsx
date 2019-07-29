@@ -3,7 +3,6 @@ import { FieldRenderProps, Field } from "react-final-form";
 import { StageTemplate } from './common/StageTemplate';
 import IStageTemplateProps from './common/IStageTemplateProps';
 import IStageA from '../state/stages/IStageA';
-import useStageA from '../context/hooks/useStageA';
 import IStageProps from './common/IStageProps';
 
 export interface IStageAProps extends IStageProps<IStageA> {
@@ -13,7 +12,7 @@ const Stage = (props: IStageTemplateProps<IStageA>): JSX.Element => StageTemplat
 
 export default function StageA(props: IStageAProps) {
     return (
-        <Stage useData={useStageA} submit={props.submit} lastStage={props.lastStage}>
+        <Stage data={props.data} submit={props.submit} lastStage={props.lastStage}>
             <>
                 <Field name="firstName">
                     {({ meta, input }: FieldRenderProps<string, HTMLElement>) => (
