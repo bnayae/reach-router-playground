@@ -14,14 +14,18 @@ export function StageTemplate<T>(props: IStageTemplateProps<T>) {
                 // children.props = { ...formProps, ...children.props }
                 return (
                     <>
-                        <h4>Rendering</h4>
                         <form onSubmit={handleSubmit}>
                             <>
                                 {children}
                                 <br />
                                 <button type="submit" disabled={submitting}>Submit</button>
                                 <br />
-                                <pre style={{ textAlign: "left" }}>{JSON.stringify(values, undefined, 2)}</pre>
+                                <h4>Values</h4>
+                                <FormSpy subscription={{ values: true }}>
+                                    {({ values }) =>
+                                        <pre style={{ textAlign: "left" }}>{JSON.stringify(values, undefined, 2)}</pre>
+                                    }
+                                </FormSpy>
                             </>
                         </form>
                     </>)

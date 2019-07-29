@@ -54,7 +54,6 @@ export default function Layout(props: ILayoutProps) {
                                 <Route path="/about" component={About} />
 
                                 <Route path="/wizard" component={Wizard} />
-                                <Route path="/wizard/:id" component={Wizard} />
 
                                 <Route exact path="/search" component={Search} />
 

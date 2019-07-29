@@ -5,11 +5,22 @@ import useSideBar from '../../contexts/useSideBar'
 import WizardContext from './context/WizardContext';
 import IWizardState from './state/IWizardState';
 import WizardState from './state/WizardState';
+import useRouter from '../../routing/useRouter';
+import Stage0 from './stages/Stage0'
+import StageA from './stages/StageA'
+import StageB from './stages/StageB'
+import StageC from './stages/StageC'
+import IStageA from './state/stages/IStageA';
+import IStageB from './state/stages/IStageB';
+import IStageC from './state/stages/IStageC';
 
 import UserIcon from '@material-ui/icons/Group';
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
 import NestIcon from '@material-ui/icons/ArtTrack';
+import { Switch, Route } from 'react-router';
+import { FormApi, SubmissionErrors } from 'final-form';
+import { useState } from 'react';
 
 
 export interface IDynamicWizardProps {
@@ -33,14 +44,62 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
         { to: "/about", text: "About", icon: <AboutIcon /> },
     ];
     useSideBar(navigation);
-
     const data: IWizardState = new WizardState();
+    const [stageIndex, setStageIndex] = useState(-1);
+
+    const { match, history } = useRouter();
+
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+    const onSubmit0 = async (values: string[],
+        form: FormApi<string[]>,
+        callback?: (errors?: SubmissionErrors) => void) => {
+        await sleep(500);
+        setStageIndex(stageIndex + 1);
+        alert(JSON.stringify(values, undefined, 2));
+    };
+
+    const onSubmitA = async (values: IStageA,
+        form: FormApi<IStageA>,
+        callback?: (errors?: SubmissionErrors) => void) => {
+        await sleep(500);
+        setStageIndex(stageIndex + 1);
+        alert(JSON.stringify(values, undefined, 2));
+    };
+
+    const onSubmitB = async (values: IStageB,
+        form: FormApi<IStageB>,
+        callback?: (errors?: SubmissionErrors) => void) => {
+        await sleep(500);
+        alert(JSON.stringify(values, undefined, 2));
+    };
+
+    const onSubmitC = async (values: IStageC,
+        form: FormApi<IStageC>,
+        callback?: (errors?: SubmissionErrors) => void) => {
+        await sleep(500);
+        alert(JSON.stringify(values, undefined, 2));
+    };
+
 
     return (
         <>
             <WizardContext.Provider value={data}>
                 <h3>Wizard</h3>
-
+                <Switch>
+                    <Route path={`${match.path}/1`} render={
+                        (props) => <StageA {...props} submit={onSubmitA} />
+                    } />
+                    <Route path={`${match.path}/2`} render={
+                        (props) => <StageB {...props} submit={onSubmitB} />
+                    } />
+                    <Route path={`${match.path}/3`} render={
+                        (props) => <StageC {...props} submit={onSubmitC} />
+                    } />
+                    <Route render={
+                        (props) => <Stage0 {...props} submit={onSubmit0} options={['a','b','c','d']} />
+                    } />
+                </Switch>
             </WizardContext.Provider>
         </>
     );

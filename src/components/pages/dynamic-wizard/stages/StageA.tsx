@@ -11,7 +11,7 @@ export interface IStageAProps extends IStageProps<IStageA> {
 
 const Stage = (props: IStageTemplateProps<IStageA>): JSX.Element => StageTemplate<IStageA>(props);
 
-export function StageA(props: IStageAProps) {
+export default function StageA(props: IStageAProps) {
     return (
         <Stage useData={useStageA} submit={props.submit}>
             <>
