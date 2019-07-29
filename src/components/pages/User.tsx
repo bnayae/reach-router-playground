@@ -17,6 +17,7 @@ export default function User(props: IUserProps) {
         { to: "/", text: "Home", icon: <HomeIcon /> },
         { to: "/users", text: "Users", icon: <UserIcon /> },
         { to: "/wizard", text: "Wizard", icon: <WizardIcon /> },
+        { to: "/nest", text: "Nesting", icon: <NestIcon /> },
         { to: "/about", text: "About", icon: <AboutIcon /> },
     ];
     useSideBar(navigation);

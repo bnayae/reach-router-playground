@@ -2,12 +2,15 @@
 import * as React from 'react';
 import ILinkToProps from '../../routing/ILinkToProps';
 import useSideBar from '../../contexts/useSideBar'
+import WizardContext from './context/WizardContext';
+import IWizardState from './state/IWizardState';
+import WizardState from './state/WizardState';
 
 import UserIcon from '@material-ui/icons/Group';
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
-import WizardIcon from '@material-ui/icons/School';
 import NestIcon from '@material-ui/icons/ArtTrack';
+
 
 export interface IDynamicWizardProps {
 }
@@ -17,6 +20,10 @@ export interface IDynamicWizardProps {
 // const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 
+// TODO: route to every stage and send the parameters from state
+//          each stage should get it it last or not
+//          back via routing
+//          send the submit func into the stage 
 
 export default function DynamicWizard(props: IDynamicWizardProps) {
     const navigation: ILinkToProps[] = [
@@ -27,10 +34,14 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
     ];
     useSideBar(navigation);
 
+    const data: IWizardState = new WizardState();
+
     return (
         <>
-            <h3>Wizard</h3>
+            <WizardContext.Provider value={data}>
+                <h3>Wizard</h3>
 
+            </WizardContext.Provider>
         </>
     );
 }
