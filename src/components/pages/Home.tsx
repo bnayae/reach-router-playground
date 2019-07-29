@@ -4,10 +4,12 @@ import ILinkToProps from '../routing/ILinkToProps';
 import useRouter from '../routing/useRouter'
 import { Link } from 'react-router-dom';
 import useSideBar from '../contexts/useSideBar';
+import LinkTo from '../routing/LinkTo';
 
+import WizardIcon from '@material-ui/icons/School';
 import UserIcon from '@material-ui/icons/Group';
 import AboutIcon from '@material-ui/icons/Announcement';
-import LinkTo from '../routing/LinkTo';
+import NestIcon from '@material-ui/icons/ArtTrack';
 
 export interface IHomeProps {
 }
@@ -15,6 +17,8 @@ export interface IHomeProps {
 export default function Home(props: IHomeProps) {
     const navigation: ILinkToProps[] = [
         { to: "/users", text: "Users", icon: <UserIcon /> },
+        { to: "/wizard", text: "Wizard", icon: <WizardIcon /> },
+        { to: "/nest", text: "Nesting", icon: <NestIcon /> },
         { to: "/about", text: "About", icon: <AboutIcon /> },
     ];
     useSideBar(navigation);

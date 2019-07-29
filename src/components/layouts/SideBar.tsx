@@ -100,7 +100,7 @@ export default function SideBar() {
             <Divider />
             <List>
                 {options.map((option, index) => (
-                    option ? <LinkTo text={option.text} to={option.to} icon={option.icon} /> : <Divider />
+                    option ? <LinkTo key={option.text} text={option.text} to={option.to} icon={option.icon} /> : <Divider />
                 ))}
             </List>
         </Drawer>

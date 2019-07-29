@@ -12,9 +12,10 @@ const User = lazy(() => import('../pages/User'));
 const Users = lazy(() => import('../pages/Users'));
 const Search = lazy(() => import('../pages/Search'));
 const About = lazy(() => import('../pages/About'));
-const WithProps = lazy(() => import('../pages/WithProps/WithProps'));
+const WithProps = lazy(() => import('../pages/with-props/WithProps'));
 const NoMatch = lazy(() => import('../pages/NoMatch'));
-const Wizard = lazy(() => import('../pages/dynamic-wizard/DynamicWizardHome'));
+const Wizard = lazy(() => import('../pages/dynamic-wizard/DynamicWizard'));
+const Nesting = lazy(() => import('../pages/nesting/Master'));
 
 export interface ILayoutProps {
 }
@@ -53,12 +54,16 @@ export default function Layout(props: ILayoutProps) {
                                 <Route path="/about" component={About} />
 
                                 <Route path="/wizard" component={Wizard} />
+                                <Route path="/wizard/:id" component={Wizard} />
 
                                 <Route exact path="/search" component={Search} />
 
                                 <Route exact path="/props" render={
                                     (props) => <WithProps {...props} title="static title" count={10} />
                                 } />
+
+                                <Route path="/nest" component={Nesting} />
+                                {/* <Route path={"/nest/:id"} component={Nesting} /> */}
 
                                 <Route component={NoMatch} />
                             </Switch>

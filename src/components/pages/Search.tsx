@@ -6,6 +6,8 @@ import useSideBar from '../contexts/useSideBar';
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
 import UserIcon from '@material-ui/icons/Group';
+import WizardIcon from '@material-ui/icons/School';
+import NestIcon from '@material-ui/icons/ArtTrack';
 
 export interface ISearchProps {
 }
@@ -14,6 +16,8 @@ export default function Search(props: ISearchProps) {
     const navigation: ILinkToProps[] = [
         { to: "/", text: "Home", icon: <HomeIcon /> },
         { to: "/users", text: "Users", icon: <UserIcon /> },
+        { to: "/wizard", text: "Wizard", icon: <WizardIcon /> },
+        { to: "/nest", text: "Nesting", icon: <NestIcon /> },
         { to: "/about", text: "About", icon: <AboutIcon /> },
     ];
     useSideBar(navigation);
