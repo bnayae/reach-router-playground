@@ -11,5 +11,6 @@ export default interface IWizardState {
         stageA: IStageA;
         stageB: IStageB;
         stageC: IStageC;
-    }
+    };
+    nextStage: string;
 }

@@ -16,4 +16,5 @@ export default class WizardState implements IWizardState {
             stageB: { option1: false, option2: false, option3: false, option4: false },
             stageC: { phone: '', email: '' }
         };
+    nextStage: string = '';
 }

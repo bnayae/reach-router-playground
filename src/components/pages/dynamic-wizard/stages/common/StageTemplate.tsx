@@ -5,20 +5,20 @@ import IStageTemplateProps from './IStageTemplateProps';
 
 export function StageTemplate<T>(props: IStageTemplateProps<T>) {
     const data = props.useData();
-
     return (
         <Form onSubmit={props.submit} initialValues={data} subscription={{ submitting: true }}>
             {(formProps: FormRenderProps<T>) => {
                 const { handleSubmit, submitting } = formProps;
                 const children = props.children;
-                // children.props = { ...formProps, ...children.props }
+                const buttonName: string = props.lastStage ? "Send" : "Next";
+
                 return (
                     <>
                         <form onSubmit={handleSubmit}>
                             <>
                                 {children}
                                 <br />
-                                <button type="submit" disabled={submitting}>Submit</button>
+                                <button type="submit" disabled={submitting}>{buttonName}</button>
                                 <br />
                                 <h4>Values</h4>
                                 <FormSpy subscription={{ values: true }}>

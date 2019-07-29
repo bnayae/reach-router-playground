@@ -13,7 +13,7 @@ const Stage = (props: IStageTemplateProps<IStageA>): JSX.Element => StageTemplat
 
 export default function StageA(props: IStageAProps) {
     return (
-        <Stage useData={useStageA} submit={props.submit}>
+        <Stage useData={useStageA} submit={props.submit} lastStage={props.lastStage}>
             <>
                 <Field name="firstName">
                     {({ meta, input }: FieldRenderProps<string, HTMLElement>) => (

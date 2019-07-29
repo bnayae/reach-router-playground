@@ -1,9 +1,14 @@
 
 import * as React from 'react';
+import { useReducer, useMemo } from 'react';
+import { Switch, Route, Redirect } from 'react-router';
+import { FormApi, SubmissionErrors } from 'final-form';
+import RenderCount from '../../utils/RenderCount'
 import ILinkToProps from '../../routing/ILinkToProps';
 import useSideBar from '../../contexts/useSideBar'
 import WizardContext from './context/WizardContext';
 import WizardState from './state/WizardState';
+import IWizardState from './state/IWizardState';
 import useRouter from '../../routing/useRouter';
 import Stage0 from './stages/Stage0'
 import StageA from './stages/StageA'
@@ -17,23 +22,10 @@ import UserIcon from '@material-ui/icons/Group';
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Announcement';
 import NestIcon from '@material-ui/icons/ArtTrack';
-import { Switch, Route } from 'react-router';
-import { FormApi, SubmissionErrors } from 'final-form';
-import { useState } from 'react';
 
 
 export interface IDynamicWizardProps {
 }
-
-// const required = (value: string) => value ? undefined : "Required";
-
-// const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-
-
-// TODO: route to every stage and send the parameters from state
-//          each stage should get it it last or not
-//          back via routing
-//          send the submit func into the stage 
 
 export default function DynamicWizard(props: IDynamicWizardProps) {
     const navigation: ILinkToProps[] = [
@@ -43,86 +35,120 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
         { to: "/about", text: "About", icon: <AboutIcon /> },
     ];
     useSideBar(navigation);
-
-    const [data, setData] = useState(new WizardState())
-    const [done, setDone] = useState(false)
     const { match, history, location } = useRouter();
 
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    enum ReducerTypes { stage0, stageA, stageB, stageC }
+    type Action =
+        | { type: ReducerTypes.stage0; values: string[]; }
+        | { type: ReducerTypes.stageA; values: IStageA; }
+        | { type: ReducerTypes.stageB; values: IStageB; }
+        | { type: ReducerTypes.stageC; values: IStageC; }
 
-    const moveNext = async (values: string[]) => {
-        await sleep(500);
-        if (values.length === 0) {
-            setDone(true);
-            history.push(match.url);
-            return;
+    const calcNextStage = (activeStages: string[], index: number): string => {
+        if (activeStages.length <= index) {
+            return "/";
         }
-        if (values.length === 1) {
-            const head = values[0];
-            history.push(`${match.url}/${head}`);
-        } else {
-            // https://stackoverflow.com/questions/35361225/javascript-head-and-tail-on-array-without-mutation
-            var head = values[0];
-            var tail = values.slice(1);
-            setData({ ...data, activeStages: tail });
-            if (head !== undefined) {
-                history.push(`${match.url}/${head}`);
-            }
-        }
+        return activeStages[index];
     }
+
+    const [data, dispatch] = useReducer(
+        (state: IWizardState, action: Action): IWizardState => {
+            switch (action.type) {
+                case ReducerTypes.stage0: {
+                    return {
+                        ...state,
+                        activeStages: action.values,
+                        stageIndex: 0,
+                        nextStage: calcNextStage(action.values, 0)
+                    };
+                }
+                case ReducerTypes.stageA: {
+                    return {
+                        ...state,
+                        stages: {
+                            ...state.stages,
+                            stageA: { ...action.values }
+                        },
+                        stageIndex: state.stageIndex + 1,
+                        nextStage: calcNextStage(state.activeStages, state.stageIndex + 1)
+                    };
+                }
+                case ReducerTypes.stageB: {
+                    return {
+                        ...state,
+                        stages: {
+                            ...state.stages,
+                            stageB: { ...action.values }
+                        },
+                        stageIndex: state.stageIndex + 1,
+                        nextStage: calcNextStage(state.activeStages, state.stageIndex + 1)
+                    };
+                }
+                case ReducerTypes.stageC: {
+                    return {
+                        ...state,
+                        stages: {
+                            ...state.stages,
+                            stageC: { ...action.values }
+                        },
+                        stageIndex: state.stageIndex + 1,
+                        nextStage: calcNextStage(state.activeStages, state.stageIndex + 1)
+                    };
+                }
+                default:
+                    throw new Error();
+            }
+        }, new WizardState()
+    );
+
+    // computed value
+    const done: boolean = useMemo(() => data.activeStages.length <= data.stageIndex, [data]);
+    const lastStage: boolean = useMemo(() => data.activeStages.length - 1 <= data.stageIndex, [data]);
+
+    let url: string = match.url;
+    if (!url.endsWith('/')) {
+        url = `${url}/`;
+    }
+    if (data.nextStage == "/") {
+        if (match.url != location.pathname) {
+            history.push(match.url);
+        }
+    } else if (!location.pathname.endsWith(data.nextStage)) {
+        console.log(`# ${location.pathname} -> ${data.nextStage}`);
+        history.push(`${url}${data.nextStage}`);
+        return (<div>loading...</div>);
+    }
+
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
     type DataType0 = { activeStages: string[] };
     const onSubmit0 = async (content: DataType0,
         form: FormApi<DataType0>,
         callback?: (errors?: SubmissionErrors) => void) => {
-        // setData({
-        //     ...data,
-        //     stages: {
-        //         ...data.stages,
-        //         stageA: { ...data.stages.stageA, firstName: 'BNAYA' }
-        //     }
-        // });
+        await sleep(500);
         const values: string[] = content.activeStages;
-        await moveNext(values);
+        dispatch({ type: ReducerTypes.stage0, values: values });
     };
 
     const onSubmitA = async (values: IStageA,
         form: FormApi<IStageA>,
         callback?: (errors?: SubmissionErrors) => void) => {
-        setData({
-            ...data,
-            stages: {
-                ...data.stages,
-                stageA: { ...values }
-            }
-        });
-        await moveNext(data.activeStages);
+        await sleep(500);
+        dispatch({ type: ReducerTypes.stageA, values: values });
     };
 
     const onSubmitB = async (values: IStageB,
         form: FormApi<IStageB>,
         callback?: (errors?: SubmissionErrors) => void) => {
-        setData({
-            ...data,
-            stages: {
-                ...data.stages,
-                stageB: { ...values }
-            }
-        });
-        await moveNext(data.activeStages);
+        await sleep(500);
+        dispatch({ type: ReducerTypes.stageB, values: values });
     };
 
     const onSubmitC = async (values: IStageC,
         form: FormApi<IStageC>,
         callback?: (errors?: SubmissionErrors) => void) => {
-        setData({
-            ...data,
-            stages: {
-                ...data.stages,
-                stageC: { ...values }
-            }
-        });
-        await moveNext(data.activeStages);
+        await sleep(500);
+        dispatch({ type: ReducerTypes.stageC, values: values });
     };
 
     const summary: React.ReactNode = done ? (
@@ -138,31 +164,21 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
                 <h3>Wizard</h3>
                 <Switch>
                     <Route path={`${match.path}/a`} render={
-                        (routeProps) => <StageA {...routeProps} submit={onSubmitA} />
+                        (routeProps) => <StageA {...routeProps} submit={onSubmitA} lastStage={lastStage} />
                     } />
                     <Route path={`${match.path}/b`} render={
-                        (routeProps) => <StageB {...routeProps} submit={onSubmitB} />
+                        (routeProps) => <StageB {...routeProps} submit={onSubmitB} lastStage={lastStage} />
                     } />
                     <Route path={`${match.path}/c`} render={
-                        (routeProps) => <StageC {...routeProps} submit={onSubmitC} />
+                        (routeProps) => <StageC {...routeProps} submit={onSubmitC} lastStage={lastStage} />
                     } />
-                    <Route render={
-                        (routeProps) => <Stage0 {...routeProps} submit={onSubmit0} options={['a', 'b', 'c']} />
+                    <Route exact path={`${match.path}`} render={
+                        (routeProps) => <Stage0 {...routeProps} submit={onSubmit0} options={['a', 'b', 'c']} lastStage={false} />
                     } />
+                    <Redirect to={`${match.path}`} />
                 </Switch>
+                <RenderCount />
                 <p>Location is {location.pathname}</p>
-                {/* <p>
-                    <strong>Match Props: </strong>
-                    <code>{JSON.stringify(match, null, 2)}</code>
-                </p>
-                <p>
-                    <strong>Location Props: </strong>
-                    <code>{JSON.stringify(location, null, 2)}</code>
-                </p>
-                <p>
-                    <strong>History Props: </strong>
-                    <code>{JSON.stringify(history, null, 2)}</code>
-                </p> */}
                 {summary}
             </WizardContext.Provider>
         </>

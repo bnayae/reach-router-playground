@@ -7,5 +7,6 @@ export default interface IStageTemplateProps<T> {
         callback?: (errors?: SubmissionErrors) => void)
         => void;
     useData: () => T;
+    lastStage: boolean;
     children?: React.ReactNode;
 }

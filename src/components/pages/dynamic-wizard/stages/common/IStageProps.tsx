@@ -6,5 +6,5 @@ export default interface IStageProps<T> {
         form: FormApi<T>,
         callback?: (errors?: SubmissionErrors) => void)
         => void;
-    // children: React.ReactNode;
+    lastStage: boolean;
 }

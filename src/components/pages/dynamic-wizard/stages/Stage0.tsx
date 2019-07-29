@@ -16,11 +16,11 @@ const Stage = (props: IStageTemplateProps<DataType>): JSX.Element => StageTempla
 export default function Stage0(props: Stage0Props) {
     const { options } = props;
     return (
-        <Stage useData={useStage0} submit={props.submit}>
+        <Stage key="stage0" useData={useStage0} submit={props.submit} lastStage={props.lastStage}>
             <>
                 {options.map((item: string, index: number) =>
-                    <>
-                        <Field name="activeStages" type="checkbox" value={item} >
+                    <div key={item}>
+                        <Field key={item} name="activeStages" type="checkbox" value={item} >
                             {({ meta, input }: FieldRenderProps<string, HTMLElement>) => (
                                 <>
                                     <label>{item}</label>
@@ -30,7 +30,7 @@ export default function Stage0(props: Stage0Props) {
                             }
                         </Field>
                         <br />
-                    </>
+                    </div>
                 )}
             </>
         </Stage >
