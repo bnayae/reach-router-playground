@@ -9,7 +9,7 @@ export function StageTemplate<T>(props: IStageTemplateProps<T>) {
     return (
         <Form onSubmit={props.submit} initialValues={data} subscription={{ submitting: true }}>
             {(formProps: FormRenderProps<T>) => {
-                const { handleSubmit, submitting, values } = formProps;
+                const { handleSubmit, submitting } = formProps;
                 const children = props.children;
                 // children.props = { ...formProps, ...children.props }
                 return (

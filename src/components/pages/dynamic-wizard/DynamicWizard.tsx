@@ -3,7 +3,6 @@ import * as React from 'react';
 import ILinkToProps from '../../routing/ILinkToProps';
 import useSideBar from '../../contexts/useSideBar'
 import WizardContext from './context/WizardContext';
-import IWizardState from './state/IWizardState';
 import WizardState from './state/WizardState';
 import useRouter from '../../routing/useRouter';
 import Stage0 from './stages/Stage0'
@@ -44,7 +43,7 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
         { to: "/about", text: "About", icon: <AboutIcon /> },
     ];
     useSideBar(navigation);
-    const data: IWizardState = new WizardState();
+    const [data, setData] = useState(new WizardState())
     const [stageIndex, setStageIndex] = useState(-1);
 
     const { match, history, location } = useRouter();
@@ -56,7 +55,9 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
         callback?: (errors?: SubmissionErrors) => void) => {
         await sleep(500);
         setStageIndex(stageIndex + 1);
-        alert(JSON.stringify(values, undefined, 2));
+        setData({ ...data, activeStages: { ...values } });
+        alert(JSON.stringify(data, undefined, 2));
+        // alert(JSON.stringify(values, undefined, 2));
     };
 
     const onSubmitA = async (values: IStageA,
