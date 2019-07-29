@@ -43,65 +43,115 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
         { to: "/about", text: "About", icon: <AboutIcon /> },
     ];
     useSideBar(navigation);
-    const [data, setData] = useState(new WizardState())
-    const [stageIndex, setStageIndex] = useState(-1);
 
+    const [data, setData] = useState(new WizardState())
+    const [done, setDone] = useState(false)
     const { match, history, location } = useRouter();
 
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-    const onSubmit0 = async (values: string[],
-        form: FormApi<string[]>,
-        callback?: (errors?: SubmissionErrors) => void) => {
+    const moveNext = async (values: string[]) => {
         await sleep(500);
-        setStageIndex(stageIndex + 1);
-        setData({ ...data, activeStages: { ...values } });
-        alert(JSON.stringify(data, undefined, 2));
-        // alert(JSON.stringify(values, undefined, 2));
+        if (values.length === 0) {
+            setDone(true);
+            history.push(match.url);
+            return;
+        }
+        if (values.length === 1) {
+            const head = values[0];
+            history.push(`${match.url}/${head}`);
+        } else {
+            // https://stackoverflow.com/questions/35361225/javascript-head-and-tail-on-array-without-mutation
+            var head = values[0];
+            var tail = values.slice(1);
+            setData({ ...data, activeStages: tail });
+            if (head !== undefined) {
+                history.push(`${match.url}/${head}`);
+            }
+        }
+    }
+
+    type DataType0 = { activeStages: string[] };
+    const onSubmit0 = async (content: DataType0,
+        form: FormApi<DataType0>,
+        callback?: (errors?: SubmissionErrors) => void) => {
+        // setData({
+        //     ...data,
+        //     stages: {
+        //         ...data.stages,
+        //         stageA: { ...data.stages.stageA, firstName: 'BNAYA' }
+        //     }
+        // });
+        const values: string[] = content.activeStages;
+        await moveNext(values);
     };
 
     const onSubmitA = async (values: IStageA,
         form: FormApi<IStageA>,
         callback?: (errors?: SubmissionErrors) => void) => {
-        await sleep(500);
-        setStageIndex(stageIndex + 1);
-        alert(JSON.stringify(values, undefined, 2));
+        setData({
+            ...data,
+            stages: {
+                ...data.stages,
+                stageA: { ...values }
+            }
+        });
+        await moveNext(data.activeStages);
     };
 
     const onSubmitB = async (values: IStageB,
         form: FormApi<IStageB>,
         callback?: (errors?: SubmissionErrors) => void) => {
-        await sleep(500);
-        alert(JSON.stringify(values, undefined, 2));
+        setData({
+            ...data,
+            stages: {
+                ...data.stages,
+                stageB: { ...values }
+            }
+        });
+        await moveNext(data.activeStages);
     };
 
     const onSubmitC = async (values: IStageC,
         form: FormApi<IStageC>,
         callback?: (errors?: SubmissionErrors) => void) => {
-        await sleep(500);
-        alert(JSON.stringify(values, undefined, 2));
+        setData({
+            ...data,
+            stages: {
+                ...data.stages,
+                stageC: { ...values }
+            }
+        });
+        await moveNext(data.activeStages);
     };
 
+    const summary: React.ReactNode = done ? (
+        <p>
+            <strong>Data: </strong>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+        </p>
+    ) : undefined;
 
     return (
         <>
             <WizardContext.Provider value={data}>
                 <h3>Wizard</h3>
                 <Switch>
-                    <Route path={`${match.path}/1`} render={
-                        (props) => <StageA {...props} submit={onSubmitA} />
+                    <Route path={`${match.path}/a`} render={
+                        (routeProps) => <StageA {...routeProps} submit={onSubmitA} />
                     } />
-                    <Route path={`${match.path}/2`} render={
-                        (props) => <StageB {...props} submit={onSubmitB} />
+                    <Route path={`${match.path}/b`} render={
+                        (routeProps) => <StageB {...routeProps} submit={onSubmitB} />
                     } />
-                    <Route path={`${match.path}/3`} render={
-                        (props) => <StageC {...props} submit={onSubmitC} />
+                    <Route path={`${match.path}/c`} render={
+                        (routeProps) => <StageC {...routeProps} submit={onSubmitC} />
                     } />
                     <Route render={
-                        (props) => <Stage0 {...props} submit={onSubmit0} options={['a', 'b', 'c', 'd']} />
+                        (routeProps) => <Stage0 {...routeProps} submit={onSubmit0} options={['a', 'b', 'c']} />
                     } />
                 </Switch>
-                <p>
+                <p>Location is {location.pathname}</p>
+                {/* <p>
                     <strong>Match Props: </strong>
                     <code>{JSON.stringify(match, null, 2)}</code>
                 </p>
@@ -112,7 +162,8 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
                 <p>
                     <strong>History Props: </strong>
                     <code>{JSON.stringify(history, null, 2)}</code>
-                </p>
+                </p> */}
+                {summary}
             </WizardContext.Provider>
         </>
     );

@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { FieldRenderProps, Field } from "react-final-form";
-import { StageTemplate } from './common/form-template/StageTemplate';
+import { StageTemplate } from './common/StageTemplate';
 import IStageTemplateProps from './common/IStageTemplateProps';
 import useStage0 from '../context/hooks/useStage0';
 import IStageProps from './common/IStageProps';
 
-export interface Stage0Props extends IStageProps<string[]> {
+type DataType = { activeStages: string[] };
+
+export interface Stage0Props extends IStageProps<DataType> {
     options: string[];
 }
 
-const Stage = (props: IStageTemplateProps<string[]>): JSX.Element => StageTemplate<string[]>(props);
+const Stage = (props: IStageTemplateProps<DataType>): JSX.Element => StageTemplate<DataType>(props);
 
 export default function Stage0(props: Stage0Props) {
     const { options } = props;
@@ -21,7 +23,7 @@ export default function Stage0(props: Stage0Props) {
                         <Field name="activeStages" type="checkbox" value={item} >
                             {({ meta, input }: FieldRenderProps<string, HTMLElement>) => (
                                 <>
-                                    <label>{input.name}</label>
+                                    <label>{item}</label>
                                     <input {...input} />
                                     {meta.invalid && meta.touched && <span style={{ color: "red" }}>{meta.error}</span>}
                                 </>)

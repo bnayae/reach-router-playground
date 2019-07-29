@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Form, FormRenderProps, FormSpy } from "react-final-form";
-import IStageTemplateProps from '../IStageTemplateProps';
+import IStageTemplateProps from './IStageTemplateProps';
 
 
 export function StageTemplate<T>(props: IStageTemplateProps<T>) {

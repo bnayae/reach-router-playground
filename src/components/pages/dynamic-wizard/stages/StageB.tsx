@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FieldRenderProps, Field } from "react-final-form";
-import { StageTemplate } from './common/form-template/StageTemplate';
+import { StageTemplate } from './common/StageTemplate';
 import IStageTemplateProps from './common/IStageTemplateProps';
 import IStageB from '../state/stages/IStageB';
 import useStageB from '../context/hooks/useStageB';
