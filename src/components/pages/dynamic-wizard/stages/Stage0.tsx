@@ -18,7 +18,7 @@ export default function Stage0(props: Stage0Props) {
             <>
                 {options.map((item: string, index: number) =>
                     <>
-                        <Field name={item} type="checkbox">
+                        <Field name="activeStages" type="checkbox" value={item} >
                             {({ meta, input }: FieldRenderProps<string, HTMLElement>) => (
                                 <>
                                     <label>{input.name}</label>

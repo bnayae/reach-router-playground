@@ -47,7 +47,7 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
     const data: IWizardState = new WizardState();
     const [stageIndex, setStageIndex] = useState(-1);
 
-    const { match, history } = useRouter();
+    const { match, history, location } = useRouter();
 
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -97,9 +97,21 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
                         (props) => <StageC {...props} submit={onSubmitC} />
                     } />
                     <Route render={
-                        (props) => <Stage0 {...props} submit={onSubmit0} options={['a','b','c','d']} />
+                        (props) => <Stage0 {...props} submit={onSubmit0} options={['a', 'b', 'c', 'd']} />
                     } />
                 </Switch>
+                <p>
+                    <strong>Match Props: </strong>
+                    <code>{JSON.stringify(match, null, 2)}</code>
+                </p>
+                <p>
+                    <strong>Location Props: </strong>
+                    <code>{JSON.stringify(location, null, 2)}</code>
+                </p>
+                <p>
+                    <strong>History Props: </strong>
+                    <code>{JSON.stringify(history, null, 2)}</code>
+                </p>
             </WizardContext.Provider>
         </>
     );
