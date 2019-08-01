@@ -9,7 +9,8 @@ import useSideBar from '../../contexts/useSideBar'
 import WizardState from './state/WizardState';
 import IWizardState from './state/IWizardState';
 import useRouter from '../../routing/useRouter';
-import Stage0 from './stages/Stage0'
+// import Stage0 from './stages/Stage0'
+import Stage0Array from './stages/Stage0Array';
 import StageA from './stages/StageA'
 import StageB from './stages/StageB'
 import StageC from './stages/StageC'
@@ -108,8 +109,8 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
     if (!url.endsWith('/')) {
         url = `${url}/`;
     }
-    if (data.nextStage == "/") {
-        if (match.url != location.pathname) {
+    if (data.nextStage === "/") {
+        if (match.url !== location.pathname) {
             history.push(match.url);
         }
     } else if (!location.pathname.endsWith(data.nextStage)) {
@@ -171,8 +172,11 @@ export default function DynamicWizard(props: IDynamicWizardProps) {
                     (routeProps) => <StageC {...routeProps} data={data.stages.stageC} submit={onSubmitC} lastStage={lastStage} />
                 } />
                 <Route exact path={`${match.path}`} render={
-                    (routeProps) => <Stage0 {...routeProps} data={{ activeStages: data.activeStages }} submit={onSubmit0} options={['a', 'b', 'c']} lastStage={false} />
+                    (routeProps) => <Stage0Array {...routeProps} data={{ activeStages: data.activeStages }} submit={onSubmit0} options={['a', 'b', 'c']} lastStage={false} />
                 } />
+                {/* <Route exact path={`${match.path}`} render={
+                    (routeProps) => <Stage0 {...routeProps} data={{ activeStages: data.activeStages }} submit={onSubmit0} options={['a', 'b', 'c']} lastStage={false} />
+                } /> */}
                 <Redirect to={`${match.path}`} />
             </Switch>
             <RenderCount />
